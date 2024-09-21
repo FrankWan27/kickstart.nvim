@@ -10,4 +10,23 @@ if not (vim.uv or vim.loop).fs_stat(lazypath) then
 end ---@diagnostic disable-next-line: undefined-field
 vim.opt.rtp:prepend(lazypath)
 
+local function open_neo_tree(data)
+
+    -- buffer is a directory
+    local directory = vim.fn.isdirectory(data.file) == 1
+
+    if not directory then
+        return
+    end
+
+    -- change to the directory
+    vim.cmd.cd(data.file)
+
+    -- open the tree
+    -- require("neo-tree")
+    require("neo-tree.command").execute({ action = "focus", reveal = true})
+end
+
+vim.api.nvim_create_autocmd({ "VimEnter" }, { callback = open_neo_tree })
+
 -- vim: ts=2 sts=2 sw=2 et

@@ -12,6 +12,19 @@ vim.opt.number = true
 -- Enable mouse mode, can be useful for resizing splits for example!
 vim.opt.mouse = 'a'
 
+-- Disable arrow keys
+local function unbind(key)
+    vim.keymap.set({'n', 'i', 'v'}, key, '<Nop>')
+end
+
+local unbinds = {'<Up>', '<Down>', '<Left>', '<Right>',
+                '<S-Up>', '<S-Down>', '<S-Left>', '<S-Right>',
+                '<C-Left>', '<C-Right>'}
+
+for i = 1, #unbinds do
+    unbind(unbinds[i])
+end
+
 -- Don't show the mode, since it's already in the status line
 vim.opt.showmode = false
 
